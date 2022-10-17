@@ -8,7 +8,7 @@ function Cheat() {
       <div className="max-w-7xl mx-auto -mt-1">
         <div className="min-w-full border h-screen rounded flex lg:grid lg:grid-cols-3">
           <Conversation />
-          <Message />
+          {/* <Message /> */}
         </div>
       </div>
     </div>

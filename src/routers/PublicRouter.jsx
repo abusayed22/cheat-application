@@ -1,8 +1,12 @@
-// import React from 'react'
-// import { useAuthcheck } from '../hooks/useAuthcheck'
+import React from "react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../hooks/useAuth";
 
-// function PublicRouter() {
-//   useAuthcheck  ? 
-// }
+function PublicRouter({ children }) {
+  const islogin = useAuth();
 
-// export default PublicRouter
+  console.log(islogin);
+  return !islogin ? children : <Navigate to={"/"} />;
+}
+
+export default PublicRouter;
