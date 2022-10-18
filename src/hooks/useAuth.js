@@ -1,11 +1,11 @@
-import { useState } from "react"
+import { useSelector } from "react-redux"
 
 export const useAuth = () => {
-    const loggedUser = useState(state => state?.auth);
-    const [auth,setAuth] = useState(false);
+    const user = useSelector(state => state.auth)
 
-    if(loggedUser?.accessToken && loggedUser?.user) {
-        setAuth(true)
+    if (user?.accessToken && user?.user) {
+        return true
+    } else {
+        return false
     }
-    return auth;
 }

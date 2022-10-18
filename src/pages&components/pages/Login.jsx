@@ -1,23 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLoginMutation } from "../../features/auth/authApi";
 import Error from "../ui/Error";
 
 function Login() {
-  const [login, { data,isLoading, isError, error:dataError }] = useLoginMutation();
+  const [login, { data, isLoading, isError, error: dataError }] =
+    useLoginMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    if(isError) {
-      setError(dataError)
+    if (dataError?.data) {
+      setError(dataError?.data);
     }
-  }, [])
+
+    if (data?.accessToken && data?.user) {
+      navigate("/cheat");
+    }
+  }, [isError, dataError, data, navigate]);
 
   const loginHandle = (e) => {
     e.preventDefault();
-      login({ email, password });
+    login({ email, password });
   };
   return (
     <div>
@@ -88,9 +94,9 @@ function Login() {
                 >
                   Sign in
                 </button>
-                {error && <Error message={error} />}
               </div>
             </form>
+            {dataError && <Error message={error} />}
           </div>
         </div>
       </div>

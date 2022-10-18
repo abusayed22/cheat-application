@@ -5,8 +5,7 @@ import { useAuth } from "../hooks/useAuth";
 function PublicRouter({ children }) {
   const islogin = useAuth();
 
-  console.log(islogin);
-  return !islogin ? children : <Navigate to={"/"} />;
+  return !islogin ? children : <Navigate to={"/cheat"} />;
 }
 
 export default PublicRouter;

@@ -9,18 +9,21 @@ const authApi = apiSlice.injectEndpoints({
                 method: "POST",
                 body: data
             }),
-            onQueryStarted: async (args, {queryFulfilled, dispatch}) => {
-                // this is passimistake update
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {
                     const res = await queryFulfilled;
 
-                    localStorage.setItem(JSON.stringify(res));
+                    localStorage.setItem("auth", JSON.stringify({
+                        accessToken: res.data.accessToken,
+                        user: res.data.user
+                    }));
 
                     dispatch(userLogin({
                         accessToken: res.data.accessToken,
                         user: res.data.user
                     }))
-                } catch (error) {}
+
+                } catch (error) { }
             }
         }),
         login: builder.mutation({
@@ -28,23 +31,26 @@ const authApi = apiSlice.injectEndpoints({
                 url: '/login',
                 method: "POST",
                 body: data
-            }), 
-            onQueryStarted: async (args, {queryFulfilled, dispatch}) => {
-                // this is passimistake update
+            }),
+            async onQueryStarted(args, { dispatch, queryFulfilled }) {
                 try {
                     const res = await queryFulfilled;
 
-                    localStorage.setItem(JSON.stringify(res));
+                    localStorage.setItem("auth", JSON.stringify({
+                        accessToken: res.data.accessToken,
+                        user: res.data.user
+                    }));
 
                     dispatch(userLogin({
                         accessToken: res.data.accessToken,
                         user: res.data.user
                     }))
-                } catch (error) {}
+
+                } catch (error) { }
             }
         })
     })
 })
 
 // export default authApi;
-export const {useRegisterMutation, useLoginMutation} = authApi
+export const { useRegisterMutation, useLoginMutation } = authApi
